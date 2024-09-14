@@ -21,7 +21,7 @@ pipeline {
             steps{
             withSonarQubeEnv('SonarQube') { 
             // You can override the credential to be used, If you have configured more than one global server connection, you can specify the corresponding SonarQube installation name configured in Jenkins
-            sh "$(scannerHome)/bin/SonarScanner"
+            sh "${scannerHome}/bin/SonarScanner"
             }
             }
         }
