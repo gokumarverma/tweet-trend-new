@@ -4,11 +4,13 @@ pipeline {
             label 'maven'
         }
     }
-
+    environment{
+        PATH="/usr/bin/mvn:$PATH"
+    }
     stages {
-        stage('fetch code') {
+        stage('build') {
             steps {
-                git branch: 'main', url: 'https://github.com/gokumarverma/tweet-trend-new.git'
+               sh 'mvn clean deploy'
             }
         }
     }
