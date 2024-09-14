@@ -13,17 +13,17 @@ pipeline {
                sh 'mvn clean deploy'
             }
         }
-
         stage('SonarQube analysis') {
             environment{
-                ScannerHome= tool SonarScanner
-            }
+            scannerHome = tool 'Awsdevopspro-Sonar-Scanner'}
             steps{
-            withSonarQubeEnv('SonarQube') { 
-            // You can override the credential to be used, If you have configured more than one global server connection, you can specify the corresponding SonarQube installation name configured in Jenkins
-            sh "${SonarQube}/bin/SonarScanner"
+            withSonarQubeEnv('Awsdevopspro-SonarQube-Server') 
+            { // If you have configured more than one global server connection, you can specify its name
+            sh "${scannerHome}/bin/sonar-scanner"
             }
             }
+
+        
         }
+    }
 }
-        }
