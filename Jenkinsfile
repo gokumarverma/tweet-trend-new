@@ -7,7 +7,7 @@ pipeline {
     environment{
         PATH="/opt/maven/bin:$PATH"
     }
-    def registry=https://awsdevopspro.jfrog.io/
+    def registry="https://awsdevopspro.jfrog.io/"
     stages {
         stage('build') {
             steps {
