@@ -1,3 +1,5 @@
+
+def registry="https://awsdevopspro.jfrog.io/"
 pipeline {
     agent {
         node {
@@ -7,7 +9,7 @@ pipeline {
     environment{
         PATH="/opt/maven/bin:$PATH"
     }
-    def registry="https://awsdevopspro.jfrog.io/"
+  
     stages {
         stage('build') {
             steps {
