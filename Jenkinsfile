@@ -7,6 +7,7 @@ pipeline {
     environment{
         PATH="/opt/maven/bin:$PATH"
     }
+    def registry=https://awsdevopspro.jfrog.io/
     stages {
         stage('build') {
             steps {
@@ -54,5 +55,29 @@ pipeline {
         //         }
         //     }
         //     }
+        stage("publish jar"){
+            steps{
+                script{
+                    def server = Artifactory.server url:registry+"/artifactory", credentialsId=jfrog-cred
+                    def properties = "buildi=${env.BUILD_ID},commitid=${GIT_COMMIT}";
+                    def uploadSpec = """{
+                    "files": [
+                        {
+                        "pattern": "jarstaging/(*)",
+                        "target": "jenkins-libs-release-local/{1}",
+                        "flat": "false"
+                        "props": "${properties}"
+                        "exclusion" : ["*.sha1", "*.md5"]            
+                        }
+                    ]
+                }"""
+                def buildInfo= server.upload(uploadSpec)
+                buildInfo.env.collect()
+                server.publishBuildinfo(buildInfo)
+
+                }
+            }
+        }
+        
+        }
     }
-}
